@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Mis pelis favoritas</string>
+    <string name="titulo">Título</string>
+    <string name="tituloHint">Título de la película</string>
+    <string name="argumento">Argumento</string>
+    <string name="argumentoHint">Sinapsis de la película</string>
+    <string name="categoria">Categoría</string>
+    <string name="duracionHint">Duración</string>
+    <string name="fechaHint">Fecha de la película</string>
+    <string name="guardar">GUARDAR</string>
+    <string name="msg_guardado">Se ha guardado la película</string>
+    <string name="msg_titulo_vacio">Título vacío</string>
+    <string name="msg_argumento_vacio">Argumento vacío</string>
+    <string name="msg_duracion_vacio">Duración vacío</string>
+    <string name="msg_fecha_vacio">Fecha vacía</string>
 </resources>

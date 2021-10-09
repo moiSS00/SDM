@@ -2,17 +2,142 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutPrincipal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/tituloText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:ems="@integer/tamanoFuente"
+        android:text="@string/titulo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.193"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.063" />
+
+    <EditText
+        android:id="@+id/tituloEdit"
+        android:layout_width="201dp"
+        android:layout_height="51dp"
+        android:ems="@integer/tamanoFuente"
+        android:hint="@string/tituloHint"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tituloText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tituloText"
+        app:layout_constraintTop_toBottomOf="@+id/tituloText"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/argumentoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="@integer/tamanoFuente"
+        android:text="@string/argumento"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tituloEdit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tituloEdit"
+        app:layout_constraintTop_toBottomOf="@+id/tituloEdit"
+        app:layout_constraintVertical_bias="0.035" />
+
+    <EditText
+        android:id="@+id/argumentoEdit"
+        android:layout_width="307dp"
+        android:layout_height="143dp"
+        android:ems="@integer/tamanoFuente"
+        android:gravity="start|top"
+        android:hint="@string/argumentoHint"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/argumentoText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/argumentoText"
+        app:layout_constraintTop_toBottomOf="@+id/argumentoText"
+        app:layout_constraintVertical_bias="0.026" />
+
+    <TextView
+        android:id="@+id/categoriaText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="@integer/tamanoFuente"
+        android:text="@string/categoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/argumentoEdit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/argumentoEdit"
+        app:layout_constraintTop_toBottomOf="@+id/argumentoEdit"
+        app:layout_constraintVertical_bias="0.072" />
+
+    <ImageButton
+        android:id="@+id/ediitarCategoriaBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/categoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.907"
+        app:layout_constraintStart_toStartOf="@+id/categoriaText"
+        app:layout_constraintTop_toBottomOf="@+id/categoriaText"
+        app:layout_constraintVertical_bias="0.055"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <Spinner
+        android:id="@+id/categoriaSpinner"
+        android:layout_width="258dp"
+        android:layout_height="51dp"
+        android:entries="@array/tipos_pelis_array"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ediitarCategoriaBtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/categoriaText"
+        app:layout_constraintTop_toBottomOf="@+id/categoriaText"
+        app:layout_constraintVertical_bias="0.055" />
+
+    <EditText
+        android:id="@+id/duracionEdit"
+        android:layout_width="341dp"
+        android:layout_height="58dp"
+        android:ems="@integer/tamanoFuente"
+        android:hint="@string/duracionHint"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/categoriaSpinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/categoriaSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/categoriaSpinner"
+        app:layout_constraintVertical_bias="0.081" />
+
+    <EditText
+        android:id="@+id/fechaEdit"
+        android:layout_width="338dp"
+        android:layout_height="56dp"
+        android:ems="@integer/tamanoFuente"
+        android:hint="@string/fechaHint"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/duracionEdit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/duracionEdit"
+        app:layout_constraintTop_toBottomOf="@+id/duracionEdit"
+        app:layout_constraintVertical_bias="0.094" />
+
+    <Button
+        android:id="@+id/guardarCategoriaBtn"
+        android:layout_width="121dp"
+        android:layout_height="64dp"
+        android:ems="@integer/tamanoFuente"
+        android:text="@string/guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.887"
+        app:layout_constraintStart_toStartOf="@+id/fechaEdit"
+        app:layout_constraintTop_toBottomOf="@+id/fechaEdit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

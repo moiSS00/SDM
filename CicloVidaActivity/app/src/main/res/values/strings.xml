@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CicloVidaActivity</string>
+    <string name="OnCreate">onCreate: Me estoy creando</string>
+    <string name="OnStart">onStart: Voy a ser mostrada al usuario</string>
+    <string name="OnResume">onResume: Interactuando con el usuario</string>
+    <string name="OnPause">onPause: Voy a estar en segundo plano</string>
+    <string name="OnRestart">onRestart: Vuelvo de nuevo</string>
+    <string name="OnDestroy">onDestroy: Me muero...</string>
+    <string name="OnStop">onStop: Dejo de estar visible</string>
+</resources>

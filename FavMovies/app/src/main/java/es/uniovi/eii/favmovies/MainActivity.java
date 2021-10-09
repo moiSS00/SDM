@@ -19,10 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.uniovi.eii.favmovies.modelo.Categoria;
+import es.uniovi.eii.favmovies.modelo.Pelicula;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Constantes para la navegación entre categorías
+    // Constantes para la navegación
     public static final String POS_CATEGORIA_SELECCIONADA = "pos_categoria_seleccionada";
     public static final String CATEGORIA_SELECCIONADA = "categoria_seleccionada";
     public static final String CATEGORIA_MODIFICADA = "categoria_modificada";
@@ -144,6 +145,12 @@ public class MainActivity extends AppCompatActivity {
                 mensaje.show();
             }
         });
+
+        // Comprobamos si se están pidiendo o no los detalles de una película
+        Intent intentPeli = getIntent();
+        Pelicula pelicula = intentPeli.getParcelableExtra(MainRecycler.PELICULA_SELECCIONADA);
+        if (pelicula != null)
+            abrirModoConsulta(pelicula);
     }
 
     /**
@@ -226,6 +233,41 @@ public class MainActivity extends AppCompatActivity {
             else if (resultCode == RESULT_CANCELED) { // El resultado es cancelado
                 Log.d("FavMovie.MainActivity", "CategoriaActivity cancelada");
             }
+        }
+    }
+
+    /**
+     * Muestra la información de una película en concreto
+     * @param pelicula Película concreta de la que queremos saber
+     */
+    private void abrirModoConsulta(Pelicula pelicula) {
+        if (!pelicula.getTitulo().isEmpty()) {
+
+            // Actualizar componentes con valores de la película específica
+            editTitulo.setText(pelicula.getTitulo());
+            editArgumento.setText(pelicula.getArgumento());
+            editDuracion.setText(pelicula.getDuracion());
+            editFecha.setText(pelicula.getFecha());
+
+            // Busqueda en la lista de categorias para colocar la posición del spinner
+            int i = 0;
+            int posicion = 0;
+            String nombreCategoria = pelicula.getCategoria().getNombre();
+            for (Categoria elemento : listaCategorias) {
+                if (elemento.getNombre().equals(nombreCategoria)) {
+                    posicion = i + 1;
+                    Log.i("Posicion spinner","" + posicion);
+                }
+                i++;
+            }
+            categoriaSpinner.setSelection(posicion);
+
+            // Inhabilitar edicion de los componentes
+            editTitulo.setEnabled(false);
+            editArgumento.setEnabled(false);
+            editDuracion.setEnabled(false);
+            editFecha.setEnabled(false);
+            categoriaSpinner.setEnabled(false);
         }
     }
 }

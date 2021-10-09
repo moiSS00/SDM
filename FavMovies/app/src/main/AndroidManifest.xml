@@ -10,13 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FavMovies">
         <activity
-            android:name=".MainRecycler"
+            android:name=".MainActivity"
             android:exported="true" />
         <activity
             android:name=".CategoriaActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainRecycler"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

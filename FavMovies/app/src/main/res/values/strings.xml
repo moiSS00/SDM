@@ -22,4 +22,6 @@
     <string name="descripcionCategoria">Descripción de la Categoría</string>
     <string name="cancel">CANCEL</string>
     <string name="ok">OK</string>
+    <string name="fechaestreno">26/08/2020</string>
+    <string name="titulopeli">Tenet</string>
 </resources>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutCategoria"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CategoriaActivity">
+
+    <TextView
+        android:id="@+id/creacionCategoriaText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="@integer/tamanoFuente"
+        android:text="@string/creacionCategoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.061" />
+
+    <TextView
+        android:id="@+id/nombreCategoriaText"
+        android:layout_width="280dp"
+        android:layout_height="30dp"
+        android:ems="@integer/tamanoFuente"
+        android:text="@string/nombreCategoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/creacionCategoriaText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/creacionCategoriaText"
+        app:layout_constraintTop_toBottomOf="@+id/creacionCategoriaText"
+        app:layout_constraintVertical_bias="0.031" />
+
+    <EditText
+        android:id="@+id/nombreCategoriaEdit"
+        android:layout_width="312dp"
+        android:layout_height="49dp"
+        android:ems="@integer/tamanoFuente"
+        android:hint="@string/nombreCategoria"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/nombreCategoriaText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/nombreCategoriaText"
+        app:layout_constraintTop_toBottomOf="@+id/nombreCategoriaText"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/descripcionCategoriaText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="@integer/tamanoFuente"
+        android:text="@string/descripcionCategoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/nombreCategoriaEdit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/nombreCategoriaEdit"
+        app:layout_constraintTop_toBottomOf="@+id/nombreCategoriaEdit"
+        app:layout_constraintVertical_bias="0.029" />
+
+    <EditText
+        android:id="@+id/descripcionCategoriaEdit"
+        android:layout_width="324dp"
+        android:layout_height="49dp"
+        android:ems="10"
+        android:hint="@string/descripcionCategoria"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/descripcionCategoriaText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/descripcionCategoriaText"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionCategoriaText"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/cancelCategoriaBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.411"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionCategoriaEdit"
+        app:layout_constraintVertical_bias="0.853" />
+
+    <Button
+        android:id="@+id/okCategoriaBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@android:string/ok"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toEndOf="@+id/cancelCategoriaBtn"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionCategoriaEdit"
+        app:layout_constraintVertical_bias="0.853" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,4 +13,13 @@
     <string name="msg_argumento_vacio">Argumento vacío</string>
     <string name="msg_duracion_vacio">Duración vacío</string>
     <string name="msg_fecha_vacio">Fecha vacía</string>
+    <string name="msg_crear_nueva_categoria">Crear nueva categoría</string>
+    <string name="msg_modif_categoria">Modificar categoría</string>
+    <string name="msg_accion_cancelada">Acción cancelada</string>
+    <string name="msg_accion_ok">Acción no cancelada</string>
+    <string name="creacionCategoria">Creación de nueva categoría</string>
+    <string name="nombreCategoria">Nombre de la Categoría</string>
+    <string name="descripcionCategoria">Descripción de la Categoría</string>
+    <string name="cancel">CANCEL</string>
+    <string name="ok">OK</string>
 </resources>

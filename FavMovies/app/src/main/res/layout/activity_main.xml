@@ -76,7 +76,7 @@
         app:layout_constraintVertical_bias="0.072" />
 
     <ImageButton
-        android:id="@+id/ediitarCategoriaBtn"
+        android:id="@+id/editarCategoriaBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/categoria"
@@ -94,7 +94,7 @@
         android:layout_height="51dp"
         android:entries="@array/tipos_pelis_array"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ediitarCategoriaBtn"
+        app:layout_constraintEnd_toStartOf="@+id/editarCategoriaBtn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/categoriaText"
         app:layout_constraintTop_toBottomOf="@+id/categoriaText"

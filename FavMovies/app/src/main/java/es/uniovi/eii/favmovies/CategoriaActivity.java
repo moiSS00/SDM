@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import es.uniovi.eii.favmovies.modelo.Categoria;
 
@@ -15,8 +15,8 @@ public class CategoriaActivity extends AppCompatActivity {
     // Atribitos que contendrán una referencia a los componentes usados
     private Button btnOK;
     private Button btnCancel;
-    private TextView editNombreCategoria;
-    private TextView editDescripcionCategoria;
+    private EditText editNombreCategoria;
+    private EditText editDescripcionCategoria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +26,8 @@ public class CategoriaActivity extends AppCompatActivity {
         // Obtenemos referencias a los componentes
         btnOK = (Button) findViewById(R.id.okCategoriaBtn);
         btnCancel = (Button) findViewById(R.id.cancelCategoriaBtn);
-        editNombreCategoria = (TextView) findViewById(R.id.nombreCategoriaEdit);
-        editDescripcionCategoria = (TextView) findViewById(R.id.descripcionCategoriaEdit);
+        editNombreCategoria = (EditText) findViewById(R.id.nombreCategoriaEdit);
+        editDescripcionCategoria = (EditText) findViewById(R.id.descripcionCategoriaEdit);
 
         // Recepción de datos
         Intent intent = getIntent();

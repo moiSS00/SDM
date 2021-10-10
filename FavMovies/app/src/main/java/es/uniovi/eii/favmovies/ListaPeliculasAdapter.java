@@ -25,6 +25,13 @@ public class ListaPeliculasAdapter extends RecyclerView.Adapter<ListaPeliculasAd
         this.listener = listener;
     }
 
+    /**
+     * Interfaz para menjar el evento click
+     */
+    public interface OnItemClickListener {
+        void onItemClick(Pelicula item);
+    }
+
     // --- Métodos que hay que sobrescribir al heredar de  RecyclerView.Adapter ---
 
     @NonNull
@@ -49,13 +56,6 @@ public class ListaPeliculasAdapter extends RecyclerView.Adapter<ListaPeliculasAd
     @Override
     public int getItemCount() {
         return listaPeliculas.size();
-    }
-
-    /**
-     * Interfaz para menjar el evento click
-     */
-    public interface OnItemClickListener {
-        void onItemClick(Pelicula item);
     }
 
     /**

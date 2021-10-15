@@ -10,8 +10,6 @@ public class Pelicula implements Parcelable  {
     private Categoria categoria;
     private String duracion;
     private String fecha;
-
-    // Ampliamos
     private String urlCaratula;
     private String urlFondo;
     private String urlTrailer;
@@ -23,7 +21,6 @@ public class Pelicula implements Parcelable  {
         this.categoria = categoria;
         this.duracion = duracion;
         this.fecha = fecha;
-
         this.urlCaratula = urlCaratula;
         this.urlFondo = urlFondo;
         this.urlTrailer = urlTrailer;
@@ -112,7 +109,6 @@ public class Pelicula implements Parcelable  {
         categoria = in.readParcelable(Categoria.class.getClassLoader());
         duracion = in.readString();
         fecha = in.readString();
-
         urlCaratula = in.readString();
         urlFondo = in.readString();
         urlTrailer = in.readString();
@@ -143,7 +139,6 @@ public class Pelicula implements Parcelable  {
         parcel.writeParcelable(categoria, i);
         parcel.writeString(duracion);
         parcel.writeString(fecha);
-
         parcel.writeString(urlCaratula);
         parcel.writeString(urlFondo);
         parcel.writeString(urlTrailer);

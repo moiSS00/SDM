@@ -127,7 +127,7 @@ public class MainRecycler extends AppCompatActivity {
     public void clickonItem(Pelicula peli) {
         Log.i("Click adpater", "Item clicked " + peli.getCategoria().getNombre());
         // Paso al modo de apertura
-        Intent intent = new Intent(MainRecycler.this, MainActivity.class);
+        Intent intent = new Intent(MainRecycler.this, ShowMovieActivity.class);
         intent.putExtra(PELICULA_SELECCIONADA, peli);
         startActivity(intent);
     }

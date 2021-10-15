@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import es.uniovi.eii.favmovies.R;
@@ -79,6 +81,7 @@ public class ListaPeliculasAdapter extends RecyclerView.Adapter<ListaPeliculasAd
         public void bindUser(final Pelicula pelicula, final OnItemClickListener listener) {
             titulo.setText(pelicula.getTitulo() + " " + pelicula.getFecha());
             fecha.setText(pelicula.getCategoria().getNombre());
+            Picasso.get().load(pelicula.getUrlCaratula()).into(imagen);
             itemView.setOnClickListener((v) -> {
                 listener.onItemClick(pelicula);
             });

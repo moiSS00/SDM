@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FavMovies">
         <activity
+            android:name=".ShowMovieActivity"
+            android:exported="true"
+            android:label="@string/title_activity_show_movie"
+            android:theme="@style/Theme.FavMovies.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" />
         <activity

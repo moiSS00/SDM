@@ -27,14 +27,14 @@
             android:id="@+id/titulopeli"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/titulopeli"
+            android:text="@string/tenet_titulo"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/fechaestreno"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/fechaestreno"
+            android:text="@string/tenet_estreno"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
     </LinearLayout>

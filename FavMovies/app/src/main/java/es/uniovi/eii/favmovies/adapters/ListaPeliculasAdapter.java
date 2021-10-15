@@ -1,4 +1,4 @@
-package es.uniovi.eii.favmovies;
+package es.uniovi.eii.favmovies.adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import es.uniovi.eii.favmovies.R;
 import es.uniovi.eii.favmovies.modelo.Pelicula;
 
 public class ListaPeliculasAdapter extends RecyclerView.Adapter<ListaPeliculasAdapter.PeliculasWiewHolder> {

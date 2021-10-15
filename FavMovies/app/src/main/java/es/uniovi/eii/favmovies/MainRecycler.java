@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.uniovi.eii.favmovies.adapters.ListaPeliculasAdapter;
 import es.uniovi.eii.favmovies.modelo.Categoria;
 import es.uniovi.eii.favmovies.modelo.Pelicula;
 

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -129,7 +130,10 @@ public class MainRecycler extends AppCompatActivity {
         // Paso al modo de apertura
         Intent intent = new Intent(MainRecycler.this, ShowMovieActivity.class);
         intent.putExtra(PELICULA_SELECCIONADA, peli);
-        startActivity(intent);
+
+        // Poner transiciones
+        // startActivity(intent);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
 }

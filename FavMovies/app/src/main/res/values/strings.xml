@@ -1,5 +1,9 @@
 <resources>
+
+    <!-- Genéricos -->
     <string name="app_name">Mis pelis favoritas</string>
+
+    <!-- MainActivity -->
     <string name="titulo">Título</string>
     <string name="tituloHint">Título de la película</string>
     <string name="argumento">Argumento</string>
@@ -8,30 +12,39 @@
     <string name="duracionHint">Duración</string>
     <string name="fechaHint">Fecha de la película</string>
     <string name="guardar">GUARDAR</string>
-    <string name="msg_guardado">Se ha guardado la película</string>
+
     <string name="msg_titulo_vacio">Título vacío</string>
     <string name="msg_argumento_vacio">Argumento vacío</string>
     <string name="msg_duracion_vacio">Duración vacío</string>
     <string name="msg_fecha_vacio">Fecha vacía</string>
-    <string name="msg_crear_nueva_categoria">Crear nueva categoría</string>
-    <string name="msg_modif_categoria">Modificar categoría</string>
-    <string name="msg_accion_cancelada">Acción cancelada</string>
-    <string name="msg_accion_ok">Acción no cancelada</string>
+    <string name="msg_guardado">Se ha guardado la película</string>
+
+    <!-- CategoriaActivity -->
     <string name="creacionCategoria">Creación de nueva categoría</string>
     <string name="nombreCategoria">Nombre de la Categoría</string>
     <string name="descripcionCategoria">Descripción de la Categoría</string>
     <string name="cancel">CANCEL</string>
     <string name="ok">OK</string>
+
+    <string name="msg_crear_nueva_categoria">Crear nueva categoría</string>
+    <string name="msg_modif_categoria">Modificar categoría</string>
+    <string name="msg_accion_cancelada">Acción cancelada</string>
+    <string name="msg_accion_ok">Acción no cancelada</string>
+
+    <!-- ShowMovieActivity -->
     <string name="title_activity_show_movie">ShowMovieActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="desc_imagen_fondo">Imagen de fondo pelicula</string>
+
+    <!-- ContentScrolling -->
     <string name="tenet_titulo">Tenet</string>
     <string name="tenet_argumento">Una acción épica que gira en torno al espionaje internacional, los viajes en el tiempo y la evolución, en la que un agente secreto debe prevenir la Tercera Guerra Mundial.</string>
     <string name="tenet_duracion">2h 30m</string>
     <string name="tenet_estreno">26/08/2020</string>
     <string name="tenet_categoria">Acción</string>
-    <string name="desc_imagen_fondo">Imagen de fondo pelicula</string>
+    <string name="desc_caratula">Descripción caratula</string>
     <string name="duracion">Duración</string>
     <string name="contenido">Contenido</string>
-    <string name="desc_caratula">Descripción caratula</string>
     <string name="estreno">Estreno</string>
+
 </resources>

@@ -268,6 +268,8 @@ public class MainActivity extends AppCompatActivity {
             editDuracion.setEnabled(false);
             editFecha.setEnabled(false);
             categoriaSpinner.setEnabled(false);
+            editarCategoriaBtn.setEnabled(false);
+            guardarCategoriaBtn.setEnabled(false);
         }
     }
 }

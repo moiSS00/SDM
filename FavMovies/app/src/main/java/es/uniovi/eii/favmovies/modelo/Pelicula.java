@@ -11,12 +11,22 @@ public class Pelicula implements Parcelable  {
     private String duracion;
     private String fecha;
 
-    public Pelicula(String titulo, String argumento, Categoria categoria, String duracion, String fecha) {
+    // Ampliamos
+    private String urlCaratula;
+    private String urlFondo;
+    private String urlTrailer;
+
+    public Pelicula(String titulo, String argumento, Categoria categoria, String duracion, String fecha,
+                    String urlCaratula, String urlFondo, String urlTrailer) {
         this.titulo = titulo;
         this.argumento = argumento;
         this.categoria = categoria;
         this.duracion = duracion;
         this.fecha = fecha;
+
+        this.urlCaratula = urlCaratula;
+        this.urlFondo = urlFondo;
+        this.urlTrailer = urlTrailer;
     }
 
     public String getTitulo() {
@@ -59,6 +69,30 @@ public class Pelicula implements Parcelable  {
         this.fecha = fecha;
     }
 
+    public String getUrlCaratula() {
+        return urlCaratula;
+    }
+
+    public void setUrlCaratula(String urlCaratula) {
+        this.urlCaratula = urlCaratula;
+    }
+
+    public String getUrlFondo() {
+        return urlFondo;
+    }
+
+    public void setUrlFondo(String urlFondo) {
+        this.urlFondo = urlFondo;
+    }
+
+    public String getUrlTrailer() {
+        return urlTrailer;
+    }
+
+    public void setUrlTrailer(String urlTrailer) {
+        this.urlTrailer = urlTrailer;
+    }
+
     @Override
     public String toString() {
         return "Pelicula{" +
@@ -78,6 +112,10 @@ public class Pelicula implements Parcelable  {
         categoria = in.readParcelable(Categoria.class.getClassLoader());
         duracion = in.readString();
         fecha = in.readString();
+
+        urlCaratula = in.readString();
+        urlFondo = in.readString();
+        urlTrailer = in.readString();
     }
 
 
@@ -105,6 +143,10 @@ public class Pelicula implements Parcelable  {
         parcel.writeParcelable(categoria, i);
         parcel.writeString(duracion);
         parcel.writeString(fecha);
+
+        parcel.writeString(urlCaratula);
+        parcel.writeString(urlFondo);
+        parcel.writeString(urlTrailer);
     }
 
 }

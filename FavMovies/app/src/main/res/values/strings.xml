@@ -35,6 +35,9 @@
     <string name="title_activity_show_movie">ShowMovieActivity</string>
     <string name="action_settings">Settings</string>
     <string name="desc_imagen_fondo">Imagen de fondo pelicula</string>
+    <string name="subject_compartir">Se compartirá la siguiente película</string>
+    <string name="error_conexion">Error de conexión</string>
+    <string name="compartir">CompartirPelicula</string>
 
     <!-- ContentScrolling -->
     <string name="tenet_titulo">Tenet</string>

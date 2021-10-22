@@ -9,10 +9,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,10 +23,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import es.uniovi.eii.favmovies.databinding.ActivityShowMovieBinding;
 import es.uniovi.eii.favmovies.modelo.Categoria;
 import es.uniovi.eii.favmovies.modelo.Pelicula;
+import es.uniovi.eii.favmovies.util.Conexion;
 
 public class ShowMovieActivity extends AppCompatActivity {
 
@@ -41,7 +46,7 @@ public class ShowMovieActivity extends AppCompatActivity {
 
     // Atributos auxiliares
     private ActivityShowMovieBinding binding;
-
+    private Pelicula pelicula;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +73,7 @@ public class ShowMovieActivity extends AppCompatActivity {
 
         // Recepción de datos
         Intent intentPeli = getIntent();
-        Pelicula pelicula = intentPeli.getParcelableExtra(MainRecycler.PELICULA_SELECCIONADA);
+        pelicula = intentPeli.getParcelableExtra(MainRecycler.PELICULA_SELECCIONADA);
         if (pelicula != null)
             abrirModoConsulta(pelicula);
 
@@ -102,5 +107,57 @@ public class ShowMovieActivity extends AppCompatActivity {
             duracion.setText(pelicula.getDuracion());
             argumento.setText(pelicula.getArgumento());
         }
+    }
+
+    // Métodos necesarios para trabajar con el menú que permite compartir la película. El
+    // activity los ejecuta automáticamente
+
+    // ------------------------------------------------------------------------------------
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_share_movie, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.compartir) { // Asigamos acción al botón de compartir
+            Conexion conexion = new Conexion(getApplicationContext());
+            if (conexion.compruebaConexion()) {
+                compartirPeli();
+            }
+            else {
+                Toast.makeText(getApplicationContext(), R.string.error_conexion, Toast.LENGTH_LONG).show();
+            }
+        }
+
+        return  super.onOptionsItemSelected(item);
+    }
+
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Método que permite compartir una película
+     */
+    private void compartirPeli() {
+        // es necesario un intent con la cte
+        Intent itSend = new Intent(Intent.ACTION_SEND);
+
+        // Vamos a enviar texto plano
+        itSend.setType("text/plain");
+
+        itSend.putExtra(Intent.EXTRA_SUBJECT,
+                getString(R.string.subject_compartir) + ": " + pelicula.getTitulo());
+        itSend.putExtra(Intent.EXTRA_TEXT, getString(R.string.titulo)
+                + ": " + pelicula.getTitulo() + "\n"
+                + ": " + pelicula.getArgumento());
+
+        // Iniciamos la actividad
+        /* Puede haber mas de una aplicacion a la que hacer un ACTION_SEND,
+         * nos sale una venana que nos permite elegir una */
+        Intent shareIntent = Intent.createChooser(itSend, null);
+        startActivity(shareIntent);
     }
 }

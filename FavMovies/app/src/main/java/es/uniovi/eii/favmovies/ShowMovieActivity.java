@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
@@ -13,21 +14,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import es.uniovi.eii.favmovies.databinding.ActivityShowMovieBinding;
-import es.uniovi.eii.favmovies.modelo.Categoria;
 import es.uniovi.eii.favmovies.modelo.Pelicula;
+import es.uniovi.eii.favmovies.ui.InfoFragment;
 import es.uniovi.eii.favmovies.util.Conexion;
 
 public class ShowMovieActivity extends AppCompatActivity {
@@ -68,6 +64,9 @@ public class ShowMovieActivity extends AppCompatActivity {
         toolbar = binding.toolbar;
         fab = binding.fab;
 
+        // Gestión de la botonera
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+
         // -- Código de configuración autogenerado por Android Studio al crear una ScrollActivity--
         setSupportActionBar(toolbar);
 
@@ -87,7 +86,51 @@ public class ShowMovieActivity extends AppCompatActivity {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pelicula.getUrlTrailer())));;
             }
         });
+
+        // --- Añado un listener creado aparte a la botonera ---
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+
+    /**
+     * Listener creado aparte para asignar información en función de la pestaña seleccionada
+     */
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            if (pelicula != null) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_info:
+                        // Creamos el fragmento de información
+                        InfoFragment info = new InfoFragment() // Paso de información
+                                .newInstance(pelicula.getFecha(), pelicula.getDuracion(), pelicula.getUrlCaratula());
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, info).commit();
+                        return true;
+                }
+            }
+            return false;
+        }
+    };
+
+//    /**
+//     * Muestra la información de una película en concreto
+//     * @param pelicula Película concreta de la que queremos saber
+//     */
+//    private void abrirModoConsulta(Pelicula pelicula) {
+//        if (!pelicula.getTitulo().isEmpty()) {
+//
+//            // Cargamos las imagenes de la película usando la librería Picasso
+//            Picasso.get().load(pelicula.getUrlCaratula()).into(imagenCaratula);
+//            Picasso.get().load(pelicula.getUrlFondo()).into(imagenFondo);
+//
+//            // Actualizar componentes con valores de la película específica
+//            toolBarLayout.setTitle(pelicula.getTitulo() + " (" + pelicula.getFecha() + ")");
+//            categoria.setText(pelicula.getCategoria().getNombre());
+//            estreno.setText(pelicula.getFecha());
+//            duracion.setText(pelicula.getDuracion());
+//            argumento.setText(pelicula.getArgumento());
+//        }
+//    }
 
     /**
      * Muestra la información de una película en concreto
@@ -96,16 +139,14 @@ public class ShowMovieActivity extends AppCompatActivity {
     private void abrirModoConsulta(Pelicula pelicula) {
         if (!pelicula.getTitulo().isEmpty()) {
 
-            // Cargamos las imagenes de la película usando la librería Picasso
-            Picasso.get().load(pelicula.getUrlCaratula()).into(imagenCaratula);
+            // Información base
+            toolBarLayout.setTitle(pelicula.getTitulo() + " (" + pelicula.getFecha() + ")");
             Picasso.get().load(pelicula.getUrlFondo()).into(imagenFondo);
 
-            // Actualizar componentes con valores de la película específica
-            toolBarLayout.setTitle(pelicula.getTitulo() + " (" + pelicula.getFecha() + ")");
-            categoria.setText(pelicula.getCategoria().getNombre());
-            estreno.setText(pelicula.getFecha());
-            duracion.setText(pelicula.getDuracion());
-            argumento.setText(pelicula.getArgumento());
+            // Cargar el fragment de INFO por defecto
+            InfoFragment info = new InfoFragment()
+                    .newInstance(pelicula.getFecha(), pelicula.getDuracion(), pelicula.getUrlCaratula());
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, info).commit();
         }
     }
 
@@ -160,4 +201,5 @@ public class ShowMovieActivity extends AppCompatActivity {
         Intent shareIntent = Intent.createChooser(itSend, null);
         startActivity(shareIntent);
     }
+
 }

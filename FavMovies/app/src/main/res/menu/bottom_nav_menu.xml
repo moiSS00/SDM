@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="es.uniovi.eii.favmovies.ShowMovieActivity">
+    <item
+        android:id="@+id/navigation_info"
+        android:orderInCategory="100"
+        android:title="@string/title_Info" />
+    <item
+        android:id="@+id/navigation_actores"
+        android:orderInCategory="101"
+        android:title="@string/title_Actores" />
+    <item
+        android:id="@+id/navigation_argumento"
+        android:orderInCategory="102"
+        android:title="@string/title_Argumento" />
+</menu>

@@ -38,6 +38,9 @@
     <string name="subject_compartir">Se compartirá la siguiente película</string>
     <string name="error_conexion">Error de conexión</string>
     <string name="compartir">CompartirPelicula</string>
+    <string name="title_Info">INFORMACIÓN</string>
+    <string name="title_Actores">ACTORES</string>
+    <string name="title_Argumento">ARGUMENTO</string>
 
     <!-- ContentScrolling -->
     <string name="tenet_titulo">Tenet</string>
@@ -49,5 +52,8 @@
     <string name="duracion">Duración</string>
     <string name="contenido">Contenido</string>
     <string name="estreno">Estreno</string>
+
+    <!-- InfoFragment -->
+    <string name="estrenoFecha">Fecha de estreno</string>
 
 </resources>

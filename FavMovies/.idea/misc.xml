@@ -13,6 +13,7 @@
         <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/layout/activity_categoria.xml" value="0.1793478260869565" />
         <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/layout/activity_main_recycler.xml" value="0.11927083333333334" />
+        <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/layout/activity_settings.xml" value="0.10729166666666666" />
         <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/layout/activity_show_movie.xml" value="0.1793478260869565" />
         <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/layout/content_scrolling.xml" value="0.1793478260869565" />
         <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/layout/content_scrollingbotonera.xml" value="0.1598731884057971" />
@@ -20,6 +21,10 @@
         <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/layout/linea_recycler_view_pelicula.xml" value="0.176" />
         <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/menu/menu_share_movie.xml" value="0.25416666666666665" />
+        <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/menu/search_movie_meni.xml" value="0.103125" />
+        <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/menu/search_movie_menu.xml" value="0.264" />
+        <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/menu/share_movie_menu.xml" value="0.1" />
+        <entry key="..\:/Git/labsSDM/FavMovies/app/src/main/res/xml/root_preferences.xml" value="0.103125" />
       </map>
     </option>
   </component>

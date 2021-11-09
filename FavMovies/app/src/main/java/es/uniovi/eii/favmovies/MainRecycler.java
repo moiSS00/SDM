@@ -1,13 +1,17 @@
 package es.uniovi.eii.favmovies;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,14 +34,31 @@ public class MainRecycler extends AppCompatActivity {
 
     // Atributos auxiliares
     private List<Pelicula> listaPeli;
+    public static String filtroCategoria = null;
+    private boolean filtrado = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_recycler);
 
+        // Recogemos la SharedPreference para hacer el filtro establecido
+        SharedPreferences sharedPreferencesMainRecycler =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        filtroCategoria = sharedPreferencesMainRecycler.getString("keyCategoria", "");
+        Log.d("lol", "entra");
+    }
+
+    /**
+     * Cuando se inicia / vuelve a la activity se cargaran las películas con
+     * el filtro aplicado
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         // Inicializa el modelo de datos
-        rellenarLista();
+        loadPeliculas();
 
         // Obtenemos referencias a los componentes
         listaPeliView = (RecyclerView) findViewById(R.id.peliculasRecyclerView);
@@ -58,6 +79,64 @@ public class MainRecycler extends AppCompatActivity {
 
         // Asignamos el adapter creado
         listaPeliView.setAdapter(lpAdater);
+    }
+
+    private void loadPeliculas() {
+        // Cargamos las películas con o son filtro
+        if (filtroCategoria == null || filtroCategoria == "") {
+            rellenarLista();
+        } else {
+            rellenarLista(filtroCategoria);
+        }
+    }
+
+    /**
+     * Rellenamos la lista de películas a partir de un fichero con datos de ejemplo
+     * aplicando un filtro
+     */
+    private void rellenarLista(String filtro) {
+        listaPeli = new ArrayList<Pelicula>();
+        Pelicula peli = null;
+
+        InputStream file = null;
+        InputStreamReader reader = null;
+        BufferedReader bufferedReader = null;
+
+        try {
+            // Abrimos directamente el fichero tomando como referencia la carpeta "assets"
+            file = getAssets().open("lista_peliculas_url_utf8.csv");
+
+            reader = new InputStreamReader(file);
+            bufferedReader = new BufferedReader(reader);
+
+            String line = null;
+            while((line = bufferedReader.readLine()) != null) {
+                String[] data = line.split(";"); // Separamos los campos de cada línea
+                if (data != null && data.length >= 5) {
+                    if (data[2].equals(filtro)) {
+                        if (data.length == 8) {
+                            peli = new Pelicula(data[0], data[1], new Categoria(data[2], ""),
+                                    data[3], data[4], data[5], data[6], data[7]);
+                        } else {
+                            peli = new Pelicula(data[0], data[1], new Categoria(data[2], ""),
+                                    data[3], data[4], "", "", ""); // Se deben poner urls por defecto
+                        }
+                        Log.d("cargarPeliculas", peli.toString());
+                        listaPeli.add(peli);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
@@ -134,6 +213,28 @@ public class MainRecycler extends AppCompatActivity {
         // Poner transiciones
         // startActivity(intent);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    // --- Gestión del menú ---
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_movie_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.settings) {
+            Intent intentSettingsActivity = new Intent(MainRecycler.this, SettingsActivity.class);
+            startActivity(intentSettingsActivity);
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -13,4 +13,22 @@
         <item>Comedias</item>
         <item>Románticas</item>
     </string-array>
+    <!-- Reply Preference -->
+    <string-array name="listapelis_entradas">
+        <item>Acción</item>
+        <item>Aventura</item>
+        <item>Drama</item>
+        <item>Ciencia ficción</item>
+        <item>Fantasía</item>
+        <item>Animación</item>
+    </string-array>
+
+    <string-array name="listapelis_valores">
+        <item>Acción</item>
+        <item>Aventura</item>
+        <item>Drama</item>
+        <item>Ciencia ficción</item>
+        <item>Fantasía</item>
+        <item>Animación</item>
+    </string-array>
 </resources>

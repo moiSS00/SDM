@@ -7,7 +7,6 @@ import android.os.Bundle;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
@@ -156,7 +155,7 @@ public class ShowMovieActivity extends AppCompatActivity {
     // ------------------------------------------------------------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_share_movie, menu);
+        getMenuInflater().inflate(R.menu.share_movie_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

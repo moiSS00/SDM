@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class Pelicula implements Parcelable  {
 
+    private int id;
     private String titulo;
     private String argumento;
     private Categoria categoria;
@@ -13,6 +14,22 @@ public class Pelicula implements Parcelable  {
     private String urlCaratula;
     private String urlFondo;
     private String urlTrailer;
+
+    public Pelicula() {
+    }
+
+    public Pelicula(int id, String titulo, String argumento, Categoria categoria, String duracion, String fecha,
+                    String urlCaratula, String urlFondo, String urlTrailer) {
+        this.id = id;
+        this.titulo = titulo;
+        this.argumento = argumento;
+        this.categoria = categoria;
+        this.duracion = duracion;
+        this.fecha = fecha;
+        this.urlCaratula = urlCaratula;
+        this.urlFondo = urlFondo;
+        this.urlTrailer = urlTrailer;
+    }
 
     public Pelicula(String titulo, String argumento, Categoria categoria, String duracion, String fecha,
                     String urlCaratula, String urlFondo, String urlTrailer) {
@@ -24,6 +41,14 @@ public class Pelicula implements Parcelable  {
         this.urlCaratula = urlCaratula;
         this.urlFondo = urlFondo;
         this.urlTrailer = urlTrailer;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -104,6 +129,7 @@ public class Pelicula implements Parcelable  {
     // --- Métodos para que categoría sea parceable ---
 
     protected Pelicula(Parcel in) {
+        id = in.readInt();
         titulo = in.readString();
         argumento = in.readString();
         categoria = in.readParcelable(Categoria.class.getClassLoader());
@@ -134,6 +160,7 @@ public class Pelicula implements Parcelable  {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
         parcel.writeString(titulo);
         parcel.writeString(argumento);
         parcel.writeParcelable(categoria, i);

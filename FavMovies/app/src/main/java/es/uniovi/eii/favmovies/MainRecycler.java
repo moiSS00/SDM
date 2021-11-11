@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.uniovi.eii.favmovies.adapters.ListaPeliculasAdapter;
+import es.uniovi.eii.favmovies.datos.PeliculasDataSource;
 import es.uniovi.eii.favmovies.modelo.Categoria;
 import es.uniovi.eii.favmovies.modelo.Pelicula;
 
@@ -37,6 +38,9 @@ public class MainRecycler extends AppCompatActivity {
     public static String filtroCategoria = null;
     private boolean filtrado = false;
 
+    // Para interactuar con base de datos
+    PeliculasDataSource peliculasDataSource = new PeliculasDataSource(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +50,6 @@ public class MainRecycler extends AppCompatActivity {
         SharedPreferences sharedPreferencesMainRecycler =
                 PreferenceManager.getDefaultSharedPreferences(this);
         filtroCategoria = sharedPreferencesMainRecycler.getString("keyCategoria", "");
-        Log.d("lol", "entra");
     }
 
     /**
@@ -57,8 +60,25 @@ public class MainRecycler extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // Inicializa el modelo de datos
-        loadPeliculas();
+        // --- Inicializa el modelo de datos ---
+
+        // Cargamos las películas con o son filtro
+        //if (filtroCategoria == null || filtroCategoria == "") {
+        //    rellenarLista();
+        //} else {
+        //    rellenarLista(filtroCategoria);
+        //}
+
+
+        // Cargamos la base de datos
+        cargarPeliculas();
+        cargarActores();
+        cargarRepartos();
+
+        // Obtenemos todas las películas
+        peliculasDataSource.open();
+        listaPeli = peliculasDataSource.getAllValorations();
+        peliculasDataSource.close();
 
         // Obtenemos referencias a los componentes
         listaPeliView = (RecyclerView) findViewById(R.id.peliculasRecyclerView);
@@ -81,14 +101,7 @@ public class MainRecycler extends AppCompatActivity {
         listaPeliView.setAdapter(lpAdater);
     }
 
-    private void loadPeliculas() {
-        // Cargamos las películas con o son filtro
-        if (filtroCategoria == null || filtroCategoria == "") {
-            rellenarLista();
-        } else {
-            rellenarLista(filtroCategoria);
-        }
-    }
+    // --- Métodos para obtener datos directamente desde un archivo local ---
 
     /**
      * Rellenamos la lista de películas a partir de un fichero con datos de ejemplo
@@ -185,9 +198,9 @@ public class MainRecycler extends AppCompatActivity {
         }
     }
 
-    /**
-     * Rellenamos la lista de películas de forma directa con datos de ejemplo
-     */
+//    /**
+//     * Rellenamos la lista de películas de forma directa con datos de ejemplo
+//     */
 //    private void rellenarLista() {
 //        listaPeli = new ArrayList<Pelicula>();
 //        Categoria catAccion = new Categoria("Acción", "Películas de acción");
@@ -199,6 +212,70 @@ public class MainRecycler extends AppCompatActivity {
 //        listaPeli.add(peli1);
 //        listaPeli.add(peli2);
 //    }
+
+    // --- Métodos para cargar datos en la base de datos ---
+
+    private void cargarPeliculas() {
+
+        Pelicula peli = null;
+
+        InputStream file = null;
+        InputStreamReader reader = null;
+        BufferedReader bufferedReader = null;
+
+        try {
+            // Abrimos directamente el fichero tomando como referencia la carpeta "assets"
+            file = getAssets().open("peliculas.csv");
+
+            reader = new InputStreamReader(file);
+            bufferedReader = new BufferedReader(reader);
+
+            String line = null;
+
+            peliculasDataSource.open();
+
+            // Esquivamos línea inicial
+            bufferedReader.readLine();
+
+            while((line = bufferedReader.readLine()) != null) {
+                String[] data = line.split(";"); // Separamos los campos de cada línea
+                if (data != null && data.length == 9) {
+                    peli = new Pelicula(
+                            Integer.parseInt(data[0]),
+                            data[1],
+                            data[2],
+                            new Categoria(data[3], ""),
+                            data[4],
+                            data[5],
+                            data[6],
+                            data[7],
+                            data[8]);
+
+                    Log.d("cargarPeliculas", peli.toString());
+                    peliculasDataSource.createpelicula(peli);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                    peliculasDataSource.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void cargarActores() {
+
+    }
+
+    private void cargarRepartos() {
+
+    }
 
     /**
      * Click del item del adapter

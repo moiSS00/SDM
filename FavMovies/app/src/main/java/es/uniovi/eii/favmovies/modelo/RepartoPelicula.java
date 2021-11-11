@@ -3,18 +3,18 @@ package es.uniovi.eii.favmovies.modelo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class PeliculasReparto  {
+public class RepartoPelicula {
 
     private int id_actor;
     private int id_pelicula;
     private String nombrePersonaje;
 
 
-    public PeliculasReparto() {
+    public RepartoPelicula() {
 
     }
 
-    public PeliculasReparto(int id_actor, int id_pelicula, String nombrePersonaje) {
+    public RepartoPelicula(int id_actor, int id_pelicula, String nombrePersonaje) {
         this.id_actor = id_actor;
         this.id_pelicula = id_pelicula;
         this.nombrePersonaje = nombrePersonaje;

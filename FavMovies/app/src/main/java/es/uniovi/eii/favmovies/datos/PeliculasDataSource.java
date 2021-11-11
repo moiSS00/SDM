@@ -9,9 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.uniovi.eii.favmovies.datos.MyDBHelper;
 import es.uniovi.eii.favmovies.modelo.Categoria;
 import es.uniovi.eii.favmovies.modelo.Pelicula;
+
 
 public class PeliculasDataSource {
 

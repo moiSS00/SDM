@@ -1,5 +1,6 @@
 package es.uniovi.eii.favmovies.datos;
 
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,8 +12,16 @@ import java.util.List;
 
 import es.uniovi.eii.favmovies.modelo.Actor;
 
-public class ActoresDataSource {
 
+/**
+ * Ejemplo <b>SQLite</b>. Ejemplo de uso de SQLite.
+ *
+ * DAO para la tabla de actor.
+ * Se encarga de abrir y cerrar la conexion, asi como hacer las consultas relacionadas con la tabla Actor
+ *
+
+ */
+public class ActoresDataSource {
     /**
      * Referencia para manejar la base de datos. Este objeto lo obtenemos a partir de MyDBHelper
      * y nos proporciona metodos para hacer operaciones
@@ -26,9 +35,8 @@ public class ActoresDataSource {
     /**
      * Columnas de la tabla
      */
-    private final String[] allColumns = {MyDBHelper.COLUMNA_ID_PELICULAS, MyDBHelper.COLUMNA_NOMBRE_ACTOR,
-            MyDBHelper.COLUMNA_IMAGEN_ACTOR, MyDBHelper.COLUMNA_URL_imdb};
-
+    private final String[] allColumns = { MyDBHelper.COLUMNA_ID_REPARTO, MyDBHelper.COLUMNA_NOMBRE_ACTOR,
+            MyDBHelper.COLUMNA_IMAGEN_ACTOR, MyDBHelper.COLUMNA_URL_imdb };
     /**
      * Constructor.
      *
@@ -48,7 +56,6 @@ public class ActoresDataSource {
      */
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
-
     }
 
     /**
@@ -58,60 +65,90 @@ public class ActoresDataSource {
         dbHelper.close();
     }
 
-    /**
-     * Recibe el actor y crea el registro en la base de datos.
-     * @param actorToInsert
-     * @return
-     */
+
     public long createactor(Actor actorToInsert) {
         // Establecemos los valores que se insertaran
         ContentValues values = new ContentValues();
 
-        values.put(MyDBHelper.COLUMNA_ID_PELICULAS, actorToInsert.getId());
+        values.put(MyDBHelper.COLUMNA_ID_REPARTO, actorToInsert.getId());
         values.put(MyDBHelper.COLUMNA_NOMBRE_ACTOR, actorToInsert.getNombre());
         values.put(MyDBHelper.COLUMNA_IMAGEN_ACTOR, actorToInsert.getImagen());
         values.put(MyDBHelper.COLUMNA_URL_imdb, actorToInsert.getURL_imdb());
 
         // Insertamos la valoracion
         long insertId =
-                database.insert(MyDBHelper.TABLA_PELICULAS, null, values);
+                database.insert(MyDBHelper.TABLA_REPARTO, null, values);
 
         return insertId;
     }
 
     /**
-     * Obtiene todas las valoraciones andadidas por los usuarios.
+     * Obtiene todas las valoraciones andadidas por los usuarios. Sin ninguna restricción SQL
      *
      * @return Lista de objetos de tipo Actor
+     *
      */
     public List<Actor> getAllValorations() {
         // Lista que almacenara el resultado
         List<Actor> actorList = new ArrayList<Actor>();
         //hacemos una query porque queremos devolver un cursor
 
-        Cursor cursor = database.query(MyDBHelper.TABLA_PELICULAS, allColumns,
-                null, null, null, null, null);
+            Cursor cursor = database.query(MyDBHelper.TABLA_REPARTO, allColumns,
+                    null, null, null, null, null);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                final Actor actor = new Actor();
+                actor.setId(cursor.getInt(0));
+                actor.setNombre(cursor.getString(1));
+                actor.setImagen("https://image.tmdb.org/t/p/original/" + cursor.getString(2));
+                actor.setURL_imdb("https://www.imdb.com/name/" + cursor.getString(3));
 
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            final Actor actor = new Actor();
-            cursor.getInt(0);
-            actor.setId(cursor.getInt(0));
-            actor.setNombre(cursor.getString(1));
-            actor.setImagen(cursor.getString(2));
-            actor.setURL_imdb(cursor.getString(3));
 
-            actorList.add(actor);
-            cursor.moveToNext();
-        }
+                actorList.add(actor);
+                cursor.moveToNext();
+            }
 
-        cursor.close();
+            cursor.close();
+
         // Una vez obtenidos todos los datos y cerrado el cursor, devolvemos la
         // lista.
-
         return actorList;
     }
 
+    /**
+     * Devuelve una lista con todos los actores que participan en la película con el id pasado por parámetro.
+     * @param id_pelicula
+     * @return reparto
+     */
+    public List<Actor> actoresParticipantes(int id_pelicula) {
+        List<Actor> reparto = new ArrayList<Actor>();
 
+        // La expresión SQL correspondiente a la busqueda en un String.
+        Cursor cursor = database.rawQuery("SELECT " +
+                MyDBHelper.TABLA_REPARTO + "." + MyDBHelper.COLUMNA_NOMBRE_ACTOR + ", " +
+                MyDBHelper.TABLA_PELICULAS_REPARTO + "." + MyDBHelper.COLUMNA_PERSONAJE + ", " +
+                MyDBHelper.TABLA_REPARTO + "." + MyDBHelper.COLUMNA_IMAGEN_ACTOR + ", " +
+                MyDBHelper.TABLA_REPARTO + "." + MyDBHelper.COLUMNA_URL_imdb +
+                " FROM " + MyDBHelper.TABLA_PELICULAS_REPARTO +
+                " JOIN " + MyDBHelper.TABLA_REPARTO + " ON " +
+                MyDBHelper.TABLA_PELICULAS_REPARTO + "." + MyDBHelper.COLUMNA_ID_REPARTO +
+                " = " + MyDBHelper.TABLA_REPARTO + "." + MyDBHelper.COLUMNA_ID_REPARTO +
+                " WHERE " + MyDBHelper.TABLA_PELICULAS_REPARTO +
+                "." + MyDBHelper.COLUMNA_ID_PELICULAS + " = " + id_pelicula, null);
+
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            reparto.add(new Actor(cursor.getInt(0),
+                    cursor.getString(1),
+                    //Añadimos el encabezado de las páginas web
+                    "https://image.tmdb.org/t/p/original/" + cursor.getString(2),
+                    "https://www.imdb.com/name/" + cursor.getString(3)));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return reparto;
+    }
 
 }

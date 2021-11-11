@@ -139,11 +139,12 @@ public class ActoresDataSource {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            reparto.add(new Actor(cursor.getInt(0),
-                    cursor.getString(1),
-                    //Añadimos el encabezado de las páginas web
-                    "https://image.tmdb.org/t/p/original/" + cursor.getString(2),
-                    "https://www.imdb.com/name/" + cursor.getString(3)));
+            Actor actor = new Actor();
+            actor.setNombre(cursor.getString(0));
+            actor.setPersonaje(cursor.getString(1));
+            actor.setImagen("https://image.tmdb.org/t/p/original/" + cursor.getString(2));
+            actor.setURL_imdb("https://www.imdb.com/name/" + cursor.getString(3));
+            reparto.add(actor);
             cursor.moveToNext();
         }
         cursor.close();

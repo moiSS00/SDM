@@ -5,10 +5,14 @@ import android.os.Parcelable;
 
 public class Actor implements Parcelable {
 
+    // Atributos BD
     private int id;
     private String nombre;
     private String imagen;
     private String URL_imdb;
+
+    // Atributo auxiliar
+    private String personaje;
 
     public Actor() {
     }
@@ -18,6 +22,8 @@ public class Actor implements Parcelable {
         this.nombre = nombre;
         this.imagen = imagen;
         this.URL_imdb = URL_imdb;
+
+        this.personaje = "";
     }
 
     protected Actor(Parcel in) {
@@ -25,6 +31,8 @@ public class Actor implements Parcelable {
         nombre = in.readString();
         imagen = in.readString();
         URL_imdb = in.readString();
+
+        personaje = in.readString();
     }
 
     public int getId() {
@@ -57,6 +65,14 @@ public class Actor implements Parcelable {
 
     public void setURL_imdb(String URL_imdb) {
         this.URL_imdb = URL_imdb;
+    }
+
+    public String getPersonaje() {
+        return personaje;
+    }
+
+    public void setPersonaje(String personaje) {
+        this.personaje = personaje;
     }
 
     @Override
@@ -92,5 +108,7 @@ public class Actor implements Parcelable {
         parcel.writeString(nombre);
         parcel.writeString(imagen);
         parcel.writeString(URL_imdb);
+
+        parcel.writeString(personaje);
     }
 }

@@ -66,15 +66,12 @@ public class MainRecycler extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // --- Inicializa el modelo de datos ---
-
-        // Cargamos las películas con o son filtro
+        // Inicializa el modelo de datos
         //if (filtroCategoria == null || filtroCategoria == "") {
         //    rellenarLista();
         //} else {
         //    rellenarLista(filtroCategoria);
         //}
-
 
         // Cargamos la base de datos
         cargarPeliculas();
@@ -83,7 +80,11 @@ public class MainRecycler extends AppCompatActivity {
 
         // Obtenemos todas las películas
         peliculasDataSource.open();
-        listaPeli = peliculasDataSource.getAllValorations();
+        if (filtroCategoria == null || filtroCategoria == "") {
+            listaPeli = peliculasDataSource.getAllValorations();
+        } else {
+            listaPeli = peliculasDataSource.getFilteredValorations(filtroCategoria);
+        }
         peliculasDataSource.close();
 
         // Obtenemos referencias a los componentes
@@ -345,13 +346,12 @@ public class MainRecycler extends AppCompatActivity {
 
             while((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(";"); // Separamos los campos de cada línea
-                if (data != null && data.length == 9) {
+                if (data != null && data.length == 3) {
                     repartoPelicula = new RepartoPelicula(
                             Integer.parseInt(data[0]),
                             Integer.parseInt(data[1]),
                             data[2]);
 
-                    Log.d("cargarRepartoPeliculas", repartoPelicula.toString());
                     repartoPeliculaDataSource.createrepartoPelicula(repartoPelicula);
                 }
             }
@@ -399,7 +399,6 @@ public class MainRecycler extends AppCompatActivity {
         if (id == R.id.settings) {
             Intent intentSettingsActivity = new Intent(MainRecycler.this, SettingsActivity.class);
             startActivity(intentSettingsActivity);
-
             return true;
         }
 

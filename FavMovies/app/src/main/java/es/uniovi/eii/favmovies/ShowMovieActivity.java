@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import es.uniovi.eii.favmovies.databinding.ActivityShowMovieBinding;
 import es.uniovi.eii.favmovies.modelo.Pelicula;
+import es.uniovi.eii.favmovies.ui.ActoresFragment;
 import es.uniovi.eii.favmovies.ui.InfoFragment;
 import es.uniovi.eii.favmovies.util.Conexion;
 
@@ -105,6 +106,10 @@ public class ShowMovieActivity extends AppCompatActivity {
                                 .newInstance(pelicula.getFecha(), pelicula.getDuracion(), pelicula.getUrlCaratula());
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, info).commit();
                         return true;
+                    case R.id.navigation_actores:
+                        ActoresFragment actores = new ActoresFragment()
+                                .newInstance(pelicula.getId());
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, actores).commit();
                 }
             }
             return false;

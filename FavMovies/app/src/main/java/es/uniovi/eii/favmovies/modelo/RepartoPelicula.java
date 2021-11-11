@@ -1,10 +1,9 @@
 package es.uniovi.eii.favmovies.modelo;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 public class RepartoPelicula {
 
+    // Atributos BD
     private int id_actor;
     private int id_pelicula;
     private String nombrePersonaje;

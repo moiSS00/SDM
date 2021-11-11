@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class Pelicula implements Parcelable  {
 
+    // Atributos BD
     private int id;
     private String titulo;
     private String argumento;

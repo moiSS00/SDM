@@ -21,9 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.uniovi.eii.favmovies.adapters.ListaPeliculasAdapter;
+import es.uniovi.eii.favmovies.datos.ActoresDataSource;
 import es.uniovi.eii.favmovies.datos.PeliculasDataSource;
+import es.uniovi.eii.favmovies.datos.RepartoPeliculaDataSource;
+import es.uniovi.eii.favmovies.modelo.Actor;
 import es.uniovi.eii.favmovies.modelo.Categoria;
 import es.uniovi.eii.favmovies.modelo.Pelicula;
+import es.uniovi.eii.favmovies.modelo.RepartoPelicula;
 
 public class MainRecycler extends AppCompatActivity {
 
@@ -40,6 +44,8 @@ public class MainRecycler extends AppCompatActivity {
 
     // Para interactuar con base de datos
     PeliculasDataSource peliculasDataSource = new PeliculasDataSource(this);
+    ActoresDataSource actoresDataSource = new ActoresDataSource(this);
+    RepartoPeliculaDataSource repartoPeliculaDataSource = new RepartoPeliculaDataSource(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,7 +222,6 @@ public class MainRecycler extends AppCompatActivity {
     // --- Métodos para cargar datos en la base de datos ---
 
     private void cargarPeliculas() {
-
         Pelicula peli = null;
 
         InputStream file = null;
@@ -270,11 +275,98 @@ public class MainRecycler extends AppCompatActivity {
     }
 
     private void cargarActores() {
+        Actor actor = null;
 
+        InputStream file = null;
+        InputStreamReader reader = null;
+        BufferedReader bufferedReader = null;
+
+        try {
+            // Abrimos directamente el fichero tomando como referencia la carpeta "assets"
+            file = getAssets().open("reparto.csv");
+
+            reader = new InputStreamReader(file);
+            bufferedReader = new BufferedReader(reader);
+
+            String line = null;
+
+            actoresDataSource.open();
+
+            // Esquivamos línea inicial
+            bufferedReader.readLine();
+
+            while((line = bufferedReader.readLine()) != null) {
+                String[] data = line.split(";"); // Separamos los campos de cada línea
+                if (data != null && data.length == 4) {
+                    actor = new Actor(
+                            Integer.parseInt(data[0]),
+                            data[1],
+                            data[2],
+                            data[3]);
+
+                    Log.d("cargarActores", actor.toString());
+                    actoresDataSource.createactor(actor);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                    actoresDataSource.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private void cargarRepartos() {
+        RepartoPelicula repartoPelicula = null;
 
+        InputStream file = null;
+        InputStreamReader reader = null;
+        BufferedReader bufferedReader = null;
+
+        try {
+            // Abrimos directamente el fichero tomando como referencia la carpeta "assets"
+            file = getAssets().open("peliculas-reparto.csv");
+
+            reader = new InputStreamReader(file);
+            bufferedReader = new BufferedReader(reader);
+
+            String line = null;
+
+            repartoPeliculaDataSource.open();
+
+            // Esquivamos línea inicial
+            bufferedReader.readLine();
+
+            while((line = bufferedReader.readLine()) != null) {
+                String[] data = line.split(";"); // Separamos los campos de cada línea
+                if (data != null && data.length == 9) {
+                    repartoPelicula = new RepartoPelicula(
+                            Integer.parseInt(data[0]),
+                            Integer.parseInt(data[1]),
+                            data[2]);
+
+                    Log.d("cargarRepartoPeliculas", repartoPelicula.toString());
+                    repartoPeliculaDataSource.createrepartoPelicula(repartoPelicula);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                    repartoPeliculaDataSource.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**

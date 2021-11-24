@@ -9,9 +9,13 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,6 +23,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import es.uniovi.eii.favmovies.adapters.ListaPeliculasAdapter;
 import es.uniovi.eii.favmovies.datos.ActoresDataSource;
@@ -36,11 +42,13 @@ public class MainRecycler extends AppCompatActivity {
 
     // Atribitos que contendrán una referencia a los componentes usados
     private RecyclerView listaPeliView;
+    private ProgressBar progressBar;
 
     // Atributos auxiliares
     private List<Pelicula> listaPeli;
     public static String filtroCategoria = null;
     private boolean filtrado = false;
+    private boolean result;
 
     // Para interactuar con base de datos
     PeliculasDataSource peliculasDataSource = new PeliculasDataSource(this);
@@ -52,31 +60,21 @@ public class MainRecycler extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_recycler);
 
+        // Obtenemos referencias a los componentes
+        listaPeliView = (RecyclerView) findViewById(R.id.peliculasRecyclerView);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarRecycler);
+
+        // Ejecutamos la tarea asíncrona
+        DownloadFilesTask task = new DownloadFilesTask();
+        task.execute();
+    }
+
+    private void cargarView() {
+
         // Recogemos la SharedPreference para hacer el filtro establecido
         SharedPreferences sharedPreferencesMainRecycler =
                 PreferenceManager.getDefaultSharedPreferences(this);
         filtroCategoria = sharedPreferencesMainRecycler.getString("keyCategoria", "");
-    }
-
-    /**
-     * Cuando se inicia / vuelve a la activity se cargaran las películas con
-     * el filtro aplicado
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Inicializa el modelo de datos
-        //if (filtroCategoria == null || filtroCategoria == "") {
-        //    rellenarLista();
-        //} else {
-        //    rellenarLista(filtroCategoria);
-        //}
-
-        // Cargamos la base de datos
-        cargarPeliculas();
-        cargarActores();
-        cargarRepartos();
 
         // Obtenemos todas las películas
         peliculasDataSource.open();
@@ -86,9 +84,6 @@ public class MainRecycler extends AppCompatActivity {
             listaPeli = peliculasDataSource.getFilteredValorations(filtroCategoria);
         }
         peliculasDataSource.close();
-
-        // Obtenemos referencias a los componentes
-        listaPeliView = (RecyclerView) findViewById(R.id.peliculasRecyclerView);
 
         // Configuramos el RecyclerView con la lista de películas
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -106,6 +101,59 @@ public class MainRecycler extends AppCompatActivity {
 
         // Asignamos el adapter creado
         listaPeliView.setAdapter(lpAdater);
+    }
+
+    /**
+     * Tarea asíncrona a realizar
+     */
+    private class DownloadFilesTask {
+        public void execute() {
+
+            // Variables auxiliares necesarias
+            final Executor EXECUTOR = Executors.newSingleThreadExecutor();
+            final Handler HANDLER = new Handler(Looper.getMainLooper());
+
+            // Establecemos la tarea a ejecutar
+            EXECUTOR.execute(new Runnable() {
+                @Override
+                public void run() {
+
+                    // PreExecute -> Interacciona con la interfaz de usuario
+                    HANDLER.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setVisibility(View.VISIBLE);
+                            progressBar.setProgress(0);
+                            progressBar.setIndeterminate(false);
+                        }
+                    });
+
+                    // Tarea asíncrona
+                    try {
+                        cargarPeliculas();
+                        cargarActores();
+                        cargarRepartos();
+                        result = true;
+                    } catch (Exception e) {
+                        result = false;
+                    }
+
+                    // PostExecute -> Interacciona con la interfaz de usuario
+                    HANDLER.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (result) {
+                                cargarView();
+                                Log.d("asincrono", "éxito");
+                            } else {
+                                Log.d("asincrono", "fracaso");
+                            }
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                }
+            });
+        }
     }
 
     // --- Métodos para obtener datos directamente desde un archivo local ---
@@ -158,67 +206,6 @@ public class MainRecycler extends AppCompatActivity {
             }
         }
     }
-
-    /**
-     * Rellenamos la lista de películas a partir de un fichero con datos de ejemplo
-     */
-    private void rellenarLista() {
-        listaPeli = new ArrayList<Pelicula>();
-        Pelicula peli = null;
-
-        InputStream file = null;
-        InputStreamReader reader = null;
-        BufferedReader bufferedReader = null;
-
-        try {
-            // Abrimos directamente el fichero tomando como referencia la carpeta "assets"
-            file = getAssets().open("lista_peliculas_url_utf8.csv");
-
-            reader = new InputStreamReader(file);
-            bufferedReader = new BufferedReader(reader);
-
-            String line = null;
-            while((line = bufferedReader.readLine()) != null) {
-                String[] data = line.split(";"); // Separamos los campos de cada línea
-                if (data != null && data.length >= 5) {
-                    if (data.length == 8) {
-                        peli = new Pelicula(data[0], data[1], new Categoria(data[2], ""),
-                                data[3], data[4], data[5], data[6], data[7]);
-                    } else {
-                        peli = new Pelicula(data[0], data[1], new Categoria(data[2], ""),
-                                data[3], data[4], null, null, null); // Se deben poner urls por defecto
-                    }
-                }
-                Log.d("cargarPeliculas", peli.toString());
-                listaPeli.add(peli);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-//    /**
-//     * Rellenamos la lista de películas de forma directa con datos de ejemplo
-//     */
-//    private void rellenarLista() {
-//        listaPeli = new ArrayList<Pelicula>();
-//        Categoria catAccion = new Categoria("Acción", "Películas de acción");
-//        Categoria catDrama = new Categoria("Dramáticas", "Películas dramáticas");
-//        Pelicula peli1 = new Pelicula("Tenet", "Una acción épica que gira en torno...",
-//                catAccion, "150", "7/08/2020");
-//        Pelicula peli2 = new Pelicula("Shreck", "Película de acción...",
-//                catDrama, "150", "12/08/2020");
-//        listaPeli.add(peli1);
-//        listaPeli.add(peli2);
-//    }
 
     // --- Métodos para cargar datos en la base de datos ---
 
